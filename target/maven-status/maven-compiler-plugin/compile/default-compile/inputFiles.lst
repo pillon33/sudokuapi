@@ -1,0 +1,11 @@
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Models\DTO\SudokuDTO.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Models\Entity\SudokuEntity.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Services\SudokuService.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Models\DAO\SudokuDAO.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Resolvers\BacktrackingResolver.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Configuration\WebSecurityConfig.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Controllers\SudokuController.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Creators\Creator.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Repositories\SudokuRepository.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\SudokuapiApplication.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\inzynierka\sudokuapi\Resolvers\Resolver.java

@@ -1,0 +1,10 @@
+com\inzynierka\sudokuapi\Controllers\SudokuController.class
+com\inzynierka\sudokuapi\repositories\SudokuRepository.class
+com\inzynierka\sudokuapi\models\DTO\SudokuDTO.class
+com\inzynierka\sudokuapi\Configuration\WebSecurityConfig.class
+com\inzynierka\sudokuapi\SudokuapiApplication.class
+com\inzynierka\sudokuapi\models\DAO\SudokuDAO.class
+com\inzynierka\sudokuapi\models\Entity\SudokuEntity.class
+com\inzynierka\sudokuapi\services\SudokuService.class
+com\inzynierka\sudokuapi\Resolvers\Resolver.class
+com\inzynierka\sudokuapi\Creators\Creator.class
