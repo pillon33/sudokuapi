@@ -1,6 +1,6 @@
-package com.inzynierka.sudokuapi.Resolvers;
+package com.sudoku.api.Resolvers;
 
-import com.inzynierka.sudokuapi.Models.DAO.SudokuDAO;
+import com.sudoku.api.Models.DAO.SudokuDAO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -8,20 +8,7 @@ import java.util.List;
 public class BacktrackingResolver implements Resolver {
     @Override
     public List<Integer> resolve(SudokuDAO sudoku) {
-        int idx = 0;
-        int firstFaceDownIdx = 0;
-
-        while (sudoku.isHint(idx)) {
-            idx++;
-        }
-
-        firstFaceDownIdx = idx;
-
-        while(!sudoku.isSolved()) {
-
-        }
-
-        return sudoku.getValues();
+        return null;
     }
 
     @Override

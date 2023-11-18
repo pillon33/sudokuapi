@@ -1,4 +1,4 @@
-package com.inzynierka.sudokuapi.Models.DAO;
+package com.sudoku.api.Models.DAO;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

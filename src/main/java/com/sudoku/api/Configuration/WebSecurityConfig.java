@@ -1,4 +1,4 @@
-package com.inzynierka.sudokuapi.Configuration;
+package com.sudoku.api.Configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

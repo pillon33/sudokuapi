@@ -1,6 +1,6 @@
-package com.inzynierka.sudokuapi.Resolvers;
+package com.sudoku.api.Resolvers;
 
-import com.inzynierka.sudokuapi.Models.DAO.SudokuDAO;
+import com.sudoku.api.Models.DAO.SudokuDAO;
 
 import java.util.HashMap;
 import java.util.List;
