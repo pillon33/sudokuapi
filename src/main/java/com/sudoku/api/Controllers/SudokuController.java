@@ -22,6 +22,8 @@ public class SudokuController {
         sf.setType("default");
         SudokuDAO sudoku = sf.create();
         log.info(String.format("\n %s", sudoku.toString()));
+        log.info(String.format("is correct: %s", sudoku.isCorrect()));
+        log.info(String.format("is solved: %s", sudoku.isSolved()));
         return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
     }
 
@@ -31,6 +33,8 @@ public class SudokuController {
         sf.setType("diagonal");
         SudokuDAO sudoku = sf.create();
         log.info(String.format("\n %s", sudoku.toString()));
+        log.info(String.format("is correct: %s", sudoku.isCorrect()));
+        log.info(String.format("is solved: %s", sudoku.isSolved()));
         return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
     }
 
@@ -39,6 +43,8 @@ public class SudokuController {
         BaseSudokuFactory sf = new BaseSudokuFactory();
         sf.setType("diagonal");
         SudokuDAO sudoku = sf.create();
+        log.info(String.format("is correct: %s", sudoku.isCorrect()));
+        log.info(String.format("is solved: %s", sudoku.isSolved()));
         log.info(String.format("\n %s", sudoku.toString()));
         return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
     }

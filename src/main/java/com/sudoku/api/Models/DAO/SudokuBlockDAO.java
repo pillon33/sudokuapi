@@ -43,6 +43,10 @@ public class SudokuBlockDAO {
         }
     }
 
+    public Boolean hasAllValues() {
+        return this.cells.stream().noneMatch(e -> e.getValue() == 0);
+    }
+
     public SudokuCellDAO getCellAt(int row, int col) {
         int idx = getIdxFromCoordinates(row, col);
         this.checkRange(idx);

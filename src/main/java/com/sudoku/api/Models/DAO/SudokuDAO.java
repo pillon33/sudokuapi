@@ -46,6 +46,50 @@ public class SudokuDAO {
         }
     }
 
+    public Boolean isCorrect() {
+        for (int i=0; i < 9; i++) {
+            List<SudokuCellDAO> row = this.getRow(i);
+            List<SudokuCellDAO> col = this.getCol(i);
+            List<SudokuCellDAO> block = this.blocks.get(i).getCells();
+
+            Boolean isRowCorrect = SudokuService.isGroupCorrect(row);
+            Boolean isColCorrect = SudokuService.isGroupCorrect(col);
+            Boolean isBlockCorrect = SudokuService.isGroupCorrect(block);
+
+            if (!isRowCorrect || !isColCorrect || !isBlockCorrect) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public Boolean isCorrectOptimisedForLastMove(int r, int c) {
+        List<SudokuCellDAO> row = this.getRow(r);
+        List<SudokuCellDAO> col = this.getCol(c);
+        List<SudokuCellDAO> block = this.blocks.get(SudokuService.getBlockIdxContiningCellAtPosition(r, c)).getCells();
+
+        Boolean isRowCorrect = SudokuService.isGroupCorrect(row);
+        Boolean isColCorrect = SudokuService.isGroupCorrect(col);
+        Boolean isBlockCorrect = SudokuService.isGroupCorrect(block);
+
+        return isRowCorrect & isColCorrect & isBlockCorrect;
+    }
+
+    public Boolean isSolved() {
+        if (!this.isCorrect()) {
+            return false;
+        }
+
+        for (int i = 0; i < 9; i++) {
+            if (!this.blocks.get(i).hasAllValues()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public SudokuCellDAO getCellAtPosition(int row, int col) {
         int blockIdx = SudokuService.getBlockIdxContiningCellAtPosition(row, col);
 
