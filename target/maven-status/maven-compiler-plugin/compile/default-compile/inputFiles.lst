@@ -1,6 +1,7 @@
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Factories\Concrete\SudokuResolverFactory.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\Entity\SudokuEntity.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Services\SudokuService.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Factories\Concrete\BaseSudokuFactory.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DAO\SudokuDAO.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DAO\SudokuBlockDAO.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Factories\Abstract\SudokuFactory.java

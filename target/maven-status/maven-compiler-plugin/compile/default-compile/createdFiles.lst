@@ -1,6 +1,7 @@
 com\sudoku\api\Models\DAO\SudokuBlockDAO.class
 com\sudoku\api\Models\DAO\SudokuDAO.class
 com\sudoku\api\Services\SudokuService.class
+com\sudoku\api\Factories\Concrete\BaseSudokuFactory.class
 com\sudoku\api\Repositories\SudokuRepository.class
 com\sudoku\api\SudokuapiApplication.class
 com\sudoku\api\Controllers\SudokuController.class
