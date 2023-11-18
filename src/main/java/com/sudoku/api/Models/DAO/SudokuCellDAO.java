@@ -75,7 +75,7 @@ public class SudokuCellDAO {
         return this.candidates.size();
     }
 
-    private void setDefaultCandidates() {
+    public void setDefaultCandidates() {
         this.candidates.clear();
 
         for (int i = 1; i <= 9; i++) {

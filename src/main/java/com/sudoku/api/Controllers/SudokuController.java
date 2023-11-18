@@ -4,6 +4,7 @@ import com.sudoku.api.Factories.Concrete.BaseSudokuFactory;
 import com.sudoku.api.Factories.Concrete.SudokuResolverFactory;
 import com.sudoku.api.Models.DAO.SudokuDAO;
 import com.sudoku.api.Models.DTO.SudokuDTO;
+import com.sudoku.api.Resolvers.BacktrackingResolver;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,6 @@ public class SudokuController {
         sf.setType("default");
         SudokuDAO sudoku = sf.create();
         log.info(String.format("\n %s", sudoku.toString()));
-        log.info(String.format("is correct: %s", sudoku.isCorrect()));
-        log.info(String.format("is solved: %s", sudoku.isSolved()));
         return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
     }
 
@@ -33,8 +32,15 @@ public class SudokuController {
         sf.setType("diagonal");
         SudokuDAO sudoku = sf.create();
         log.info(String.format("\n %s", sudoku.toString()));
-        log.info(String.format("is correct: %s", sudoku.isCorrect()));
-        log.info(String.format("is solved: %s", sudoku.isSolved()));
+        return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
+    }
+
+    @GetMapping("/resolver")
+    public ResponseEntity<Object> getBoardFromResolverFactory() {
+        SudokuResolverFactory sf = new SudokuResolverFactory();
+        sf.setResolver(new BacktrackingResolver());
+        SudokuDAO sudoku = sf.create();
+        log.info(String.format("\n %s", sudoku));
         return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
     }
 
@@ -43,8 +49,6 @@ public class SudokuController {
         BaseSudokuFactory sf = new BaseSudokuFactory();
         sf.setType("diagonal");
         SudokuDAO sudoku = sf.create();
-        log.info(String.format("is correct: %s", sudoku.isCorrect()));
-        log.info(String.format("is solved: %s", sudoku.isSolved()));
         log.info(String.format("\n %s", sudoku.toString()));
         return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
     }

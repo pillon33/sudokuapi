@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 public class BaseSudokuFactory implements SudokuFactory {
     private String type;
-    private static final List<Integer> BOARD_WITH_DIAGONAL_VALUES = List.of(
+    public static final List<Integer> BOARD_WITH_DIAGONAL_VALUES = List.of(
     1, 2, 3, 0, 0, 0, 0, 0, 0,
             4, 5, 6, 0, 0, 0, 0, 0, 0,
             7, 8, 9, 0, 0, 0, 0, 0, 0,
@@ -23,7 +23,7 @@ public class BaseSudokuFactory implements SudokuFactory {
             0, 0, 0, 0, 0, 0, 7, 8, 9
     );
 
-    private static final List<Integer> BOARD_WITH_DEFAULT_VALUES = List.of(
+    public static final List<Integer> BOARD_WITH_DEFAULT_VALUES = List.of(
     1, 2, 3, 4, 5, 6, 7, 8, 9,
             4, 5, 6, 7, 8, 9, 1, 2, 3,
             7, 8, 9, 1, 2, 3, 4, 5, 6,

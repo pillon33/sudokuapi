@@ -9,9 +9,9 @@ public interface Resolver {
     /**
      * Finds one solution for given puzzle, returns null if solution couldn't be found.
      * @param sudoku puzzle to resolve
-     * @return solution for given puzzle, null if solution couldn't be found
+     * @return solvedBoard, null if solution couldn't be found
      */
-    public List<Integer> resolve(SudokuDAO sudoku);
+    public SudokuDAO resolve(SudokuDAO sudoku);
 
     /**
      * Checks if given puzzle has exactly one solution
@@ -21,7 +21,7 @@ public interface Resolver {
     public Boolean isPuzzle(SudokuDAO sudoku);
 
     /**
-     * Checks how much solutions there are for given puzzle
+     * Checks how many solutions there are for given puzzle
      * @param sudoku puzzle
      * @return Returns number of solutions that the resolver could find
      */
