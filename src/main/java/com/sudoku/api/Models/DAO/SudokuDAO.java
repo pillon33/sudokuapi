@@ -40,7 +40,7 @@ public class SudokuDAO {
         for (int row = 0; row < 9; row++) {
             for (int col = 0; col < 9; col++) {
                 Integer value = cells.get(row*9 + col);
-                SudokuCellDAO cell = new SudokuCellDAO(value, value, false);
+                SudokuCellDAO cell = new SudokuCellDAO(value, value, value != 0);
                 this.setCellAtPosition(row, col, cell);
             }
         }
