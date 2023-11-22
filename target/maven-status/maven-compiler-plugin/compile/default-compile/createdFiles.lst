@@ -12,4 +12,5 @@ com\sudoku\api\Factories\Abstract\SudokuFactory.class
 com\sudoku\api\Configuration\WebSecurityConfig.class
 com\sudoku\api\Models\DAO\SudokuCellDAO.class
 com\sudoku\api\Factories\Concrete\SudokuResolverFactory.class
+com\sudoku\api\Models\DTO\ResolverMove.class
 com\sudoku\api\Resolvers\BacktrackingResolver.class

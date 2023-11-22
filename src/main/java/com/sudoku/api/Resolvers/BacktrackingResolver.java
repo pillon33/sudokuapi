@@ -141,7 +141,6 @@ public class BacktrackingResolver implements Resolver {
         int numberOfSolutions = 0;
 
         while (!sudoku.isSolved()) {
-            log.info(String.format("row: %s\tcol: %s", row, col));
             // went through all fields and couldn't find any solution
             if (row >= 9) {
                 row = 8;

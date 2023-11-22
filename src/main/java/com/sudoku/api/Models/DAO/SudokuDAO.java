@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -44,6 +45,30 @@ public class SudokuDAO {
                 this.setCellAtPosition(row, col, cell);
             }
         }
+    }
+
+    /**
+     * Creates copy of other sudoku board.
+     * @param sudoku
+     */
+    public SudokuDAO(SudokuDAO sudoku) {
+        this.blocks = new ArrayList<>();
+        List<SudokuBlockDAO> blocks = sudoku.getBlocks();
+
+        for (SudokuBlockDAO block : blocks) {
+            this.blocks.add(new SudokuBlockDAO(block.getCells().stream().map(SudokuCellDAO::getValue).collect(Collectors.toList())));
+        }
+    }
+
+    public SudokuDAO getResolvedBoard() {
+        for (SudokuBlockDAO block : this.blocks) {
+            for (SudokuCellDAO cell : block.cells) {
+                cell.setIsClue(true);
+                cell.setSolution(cell.getValue());
+            }
+        }
+
+        return this;
     }
 
     public Boolean isCorrect() {

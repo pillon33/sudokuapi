@@ -4,6 +4,7 @@ H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Service
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Factories\Concrete\BaseSudokuFactory.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DAO\SudokuDAO.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DAO\SudokuBlockDAO.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DTO\ResolverMove.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Factories\Abstract\SudokuFactory.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DTO\SudokuDTO.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Configuration\WebSecurityConfig.java
