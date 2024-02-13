@@ -15,7 +15,7 @@ import java.util.Random;
 @Setter
 public class SudokuResolverFactory implements SudokuFactory {
     private Resolver resolver;
-    private int numberOfHiddenFields = 40;
+    private int numberOfHiddenFields = 5;
     private int loopIterationLimit = 100*40;
     private Random random = new Random();
 

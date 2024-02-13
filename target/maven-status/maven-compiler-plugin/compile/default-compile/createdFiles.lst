@@ -1,3 +1,4 @@
+com\sudoku\api\Controllers\BacktrackingController.class
 com\sudoku\api\Models\DAO\SudokuBlockDAO.class
 com\sudoku\api\Models\DAO\SudokuDAO.class
 com\sudoku\api\Services\SudokuService.class
