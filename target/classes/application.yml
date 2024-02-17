@@ -2,3 +2,13 @@ spring.datasource:
   url: "jdbc:postgresql://localhost:5432/sudoku"
   username: "postgres"
   password: "postgres"
+
+spring:
+  jpa:
+    dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: update

@@ -1,57 +1,52 @@
 package com.sudoku.api.Controllers;
 
-import com.sudoku.api.Factories.Concrete.BaseSudokuFactory;
-import com.sudoku.api.Factories.Concrete.SudokuResolverFactory;
-import com.sudoku.api.Models.DAO.SudokuDAO;
+import com.sudoku.api.Models.DTO.ResolverDTO;
 import com.sudoku.api.Models.DTO.SudokuDTO;
-import com.sudoku.api.Resolvers.BacktrackingResolver;
+import com.sudoku.api.Models.Entity.ResolverEntity;
+import com.sudoku.api.Repositories.ResolverRepository;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("sudoku-api")
 @CrossOrigin
 @Log4j2
 public class SudokuController {
+    @Autowired
+    ResolverRepository resolverRepository;
 
-    @GetMapping("/default")
-    public ResponseEntity<Object> getBaseSudokuPuzzle() {
-        BaseSudokuFactory sf = new BaseSudokuFactory();
-        sf.setType("default");
-        SudokuDAO sudoku = sf.create();
-        log.info(String.format("\n %s", sudoku.toString()));
-        return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
+    @GetMapping("/resolvers")
+    public ResponseEntity<Object> getResolversList() {
+        List<ResolverDTO> resolvers = new ArrayList<>();
+        resolverRepository.findAll().forEach(entity -> {
+            resolvers.add(ResolverDTO.fromMain(entity));
+        });
+        return new ResponseEntity<>(resolvers, HttpStatus.OK);
     }
 
-    @GetMapping("/diagonal")
-    public ResponseEntity<Object> getDiagonalSudokuPuzzle() {
-        BaseSudokuFactory sf = new BaseSudokuFactory();
-        sf.setType("diagonal");
-        SudokuDAO sudoku = sf.create();
-        log.info(String.format("\n %s", sudoku.toString()));
-        return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
-    }
+    @PostMapping("/addResolvers")
+    public ResponseEntity<Object> getResolversList(@RequestBody List<ResolverDTO> resolvers) {
+        List<ResolverEntity> entities = resolvers
+                .stream()
+                .map(ResolverEntity::fromDTO)
+                .toList();
 
-    @GetMapping("/resolver")
-    public ResponseEntity<Object> getBoardFromResolverFactory() {
-        SudokuResolverFactory sf = new SudokuResolverFactory();
-        sf.setResolver(new BacktrackingResolver());
-        SudokuDAO sudoku = sf.create();
-        log.info(String.format("\n %s", sudoku));
-        return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
-    }
+        List<ResolverDTO> result = StreamSupport
+                .stream(resolverRepository
+                        .saveAll(entities)
+                        .spliterator(),
+                        false)
+                .map(ResolverDTO::fromMain)
+                .toList();
 
-    @GetMapping("/test")
-    public ResponseEntity<Object> test() {
-        BaseSudokuFactory sf = new BaseSudokuFactory();
-        sf.setType("diagonal");
-        SudokuDAO sudoku = sf.create();
-        log.info(String.format("\n %s", sudoku.toString()));
-        return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 }
