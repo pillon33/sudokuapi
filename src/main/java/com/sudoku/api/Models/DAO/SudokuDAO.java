@@ -55,8 +55,17 @@ public class SudokuDAO {
         this.blocks = new ArrayList<>();
         List<SudokuBlockDAO> blocks = sudoku.getBlocks();
 
-        for (SudokuBlockDAO block : blocks) {
-            this.blocks.add(new SudokuBlockDAO(block.getCells().stream().map(SudokuCellDAO::getValue).collect(Collectors.toList())));
+        for (int i = 0; i < 9; i++) {
+            SudokuBlockDAO block = new SudokuBlockDAO();
+            this.blocks.add(block);
+        }
+
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                SudokuCellDAO otherCell = sudoku.getCellAtPosition(row, col);
+                SudokuCellDAO cell = new SudokuCellDAO(otherCell.getValue(), otherCell.getSolution(), otherCell.getIsClue());
+                this.setCellAtPosition(row, col, cell);
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.sudoku.api.Factories.Concrete;
 import com.sudoku.api.Factories.Abstract.SudokuFactory;
 import com.sudoku.api.Models.DAO.SudokuCellDAO;
 import com.sudoku.api.Models.DAO.SudokuDAO;
+import com.sudoku.api.Models.Enums.BaseSudokuType;
 import com.sudoku.api.Resolvers.Resolver;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,14 @@ public class SudokuResolverFactory implements SudokuFactory {
 
     @Override
     public SudokuDAO createBoard() {
-        SudokuDAO sudoku = resolver.resolve(new SudokuDAO(BaseSudokuFactory.BOARD_WITH_DIAGONAL_VALUES));
+        BaseSudokuFactory bsf = new BaseSudokuFactory();
+
+        bsf.setType(BaseSudokuType.RANDOM_DIAGONAL);
+
+        SudokuDAO test = bsf.createBoard();
+        log.info(String.format("\n%s", test.isSolved()));
+
+        SudokuDAO sudoku = resolver.resolve(test);
 
         return sudoku.getResolvedBoard();
     }

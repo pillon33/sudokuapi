@@ -14,5 +14,6 @@ H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Configu
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Resolvers\Resolver.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DAO\SudokuCellDAO.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\SudokuapiApplication.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\Enums\BaseSudokuType.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Resolvers\BacktrackingResolver.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Controllers\SudokuController.java

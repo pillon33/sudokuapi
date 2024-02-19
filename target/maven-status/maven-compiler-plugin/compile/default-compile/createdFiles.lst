@@ -3,6 +3,7 @@ com\sudoku\api\Controllers\BacktrackingController.class
 com\sudoku\api\Models\DAO\SudokuBlockDAO.class
 com\sudoku\api\Models\DAO\SudokuDAO.class
 com\sudoku\api\Services\SudokuService.class
+com\sudoku\api\Factories\Concrete\BaseSudokuFactory$1.class
 com\sudoku\api\Factories\Concrete\BaseSudokuFactory.class
 com\sudoku\api\SudokuapiApplication.class
 com\sudoku\api\Controllers\SudokuController.class
@@ -10,6 +11,7 @@ com\sudoku\api\Models\Entity\ResolverEntity.class
 com\sudoku\api\Models\DTO\SudokuDTO.class
 com\sudoku\api\Resolvers\Resolver.class
 com\sudoku\api\Factories\Abstract\SudokuFactory.class
+com\sudoku\api\Models\Enums\BaseSudokuType.class
 com\sudoku\api\Configuration\WebSecurityConfig.class
 com\sudoku\api\Models\DTO\ResolverDTO.class
 com\sudoku\api\Models\DAO\SudokuCellDAO.class
