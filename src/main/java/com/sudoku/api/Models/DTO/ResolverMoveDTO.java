@@ -7,13 +7,13 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ResolverMove {
+public class ResolverMoveDTO {
     private final Integer row;
     private final Integer column;
     private final Integer insertedValue;
     private final List<Integer> candidates;
 
-    public ResolverMove(Integer row, Integer column, Integer insertedValue, List<Integer> candidates) {
+    public ResolverMoveDTO(Integer row, Integer column, Integer insertedValue, List<Integer> candidates) {
         this.row = row;
         this.column = column;
         this.insertedValue = insertedValue;

@@ -1,9 +1,8 @@
 package com.sudoku.api.Resolvers;
 
 import com.sudoku.api.Models.DAO.SudokuDAO;
-import com.sudoku.api.Models.DTO.ResolverMove;
+import com.sudoku.api.Models.DTO.ResolverMoveDTO;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface Resolver {
@@ -33,5 +32,5 @@ public interface Resolver {
      * @param sudoku puzzle
      * @return list of moves that the resolver makes to find the solution ( field : insertedValue )
      */
-    public List<ResolverMove> getMoves(SudokuDAO sudoku);
+    public List<ResolverMoveDTO> getMoves(SudokuDAO sudoku);
 }

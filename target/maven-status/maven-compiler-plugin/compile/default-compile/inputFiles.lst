@@ -6,7 +6,6 @@ H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Factori
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DAO\SudokuDAO.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DTO\ResolverDTO.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DAO\SudokuBlockDAO.java
-H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DTO\ResolverMove.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Factories\Abstract\SudokuFactory.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Controllers\BacktrackingController.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DTO\SudokuDTO.java
@@ -16,4 +15,5 @@ H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\SudokuapiApplication.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\Enums\BaseSudokuType.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Resolvers\BacktrackingResolver.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DTO\ResolverMoveDTO.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Controllers\SudokuController.java

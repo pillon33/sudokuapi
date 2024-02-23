@@ -1,5 +1,6 @@
 package com.sudoku.api.Models.DAO;
 
+import com.sudoku.api.Models.DTO.SudokuDTO;
 import com.sudoku.api.Services.SudokuService;
 import lombok.Getter;
 import lombok.Setter;
@@ -67,6 +68,31 @@ public class SudokuDAO {
                 this.setCellAtPosition(row, col, cell);
             }
         }
+    }
+
+    /**
+     * Creates sudokuDAO based on DTO.
+     * @param dto - dto model
+     * @return
+     */
+    public static SudokuDAO fromDTO(SudokuDTO dto) {
+        SudokuDAO result = new SudokuDAO();
+
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                int idx = SudokuService.getCellIdxFromCoordinates(row, col);
+
+                int solution = dto.cells.get(idx);
+                boolean mask = dto.mask.get(idx);
+                int value = mask ? solution : 0;
+
+                SudokuCellDAO cell = new SudokuCellDAO(value, solution, mask);
+
+                result.setCellAtPosition(row, col, cell);
+            }
+        }
+
+        return result;
     }
 
     public SudokuDAO getResolvedBoard() {

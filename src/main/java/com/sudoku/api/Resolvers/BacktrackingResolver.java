@@ -2,11 +2,10 @@ package com.sudoku.api.Resolvers;
 
 import com.sudoku.api.Models.DAO.SudokuCellDAO;
 import com.sudoku.api.Models.DAO.SudokuDAO;
-import com.sudoku.api.Models.DTO.ResolverMove;
+import com.sudoku.api.Models.DTO.ResolverMoveDTO;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Log4j2
@@ -290,14 +289,14 @@ public class BacktrackingResolver implements Resolver {
     }
 
     @Override
-    public List<ResolverMove> getMoves(SudokuDAO sudoku) {
+    public List<ResolverMoveDTO> getMoves(SudokuDAO sudoku) {
         int row = 0;
         int col = 0;
         int firstEmptyCellRow = -1;
         int firstEmptyCellCol = -1;
         int lastEditedRow = 0;
         int lastEditedCol = 0;
-        List<ResolverMove> moves = new ArrayList<>();
+        List<ResolverMoveDTO> moves = new ArrayList<>();
 
 
         while (!sudoku.isSolved()) {
@@ -331,7 +330,7 @@ public class BacktrackingResolver implements Resolver {
                     cell.setDefaultCandidates();
                     cell.setValue(0);
                     sudoku.setCellAtPosition(row, col, cell);
-                    ResolverMove move = new ResolverMove(row, col, cell.getValue(), cell.getCandidates());
+                    ResolverMoveDTO move = new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates());
                     moves.add(move);
 
                     // tried all possible values and couldn't find any solution
@@ -379,7 +378,7 @@ public class BacktrackingResolver implements Resolver {
                     cell.setDefaultCandidates();
                     cell.setValue(0);
                     sudoku.setCellAtPosition(row, col, cell);
-                    ResolverMove move = new ResolverMove(row, col, cell.getValue(), cell.getCandidates());
+                    ResolverMoveDTO move = new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates());
                     moves.add(move);
 
                     // tried all possible values and couldn't find any solution
@@ -404,7 +403,7 @@ public class BacktrackingResolver implements Resolver {
 
                     continue;
                 }
-                ResolverMove move = new ResolverMove(row, col, cell.getValue(), cell.getCandidates());
+                ResolverMoveDTO move = new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates());
                 moves.add(move);
             }
 

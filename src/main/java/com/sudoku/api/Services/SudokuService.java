@@ -55,4 +55,14 @@ public class SudokuService {
         coordinates.put("col", newCol);
         return coordinates;
     }
+
+    /**
+     * Translates given coordinates into idx in 1 dimensional array.
+     * @param row
+     * @param col
+     * @return
+     */
+    public static int getCellIdxFromCoordinates(int row, int col) {
+        return row*9 + col;
+    }
 }

@@ -2,12 +2,15 @@ package com.sudoku.api.Controllers;
 
 import com.sudoku.api.Factories.Concrete.SudokuResolverFactory;
 import com.sudoku.api.Models.DAO.SudokuDAO;
+import com.sudoku.api.Models.DTO.ResolverMoveDTO;
 import com.sudoku.api.Models.DTO.SudokuDTO;
 import com.sudoku.api.Resolvers.BacktrackingResolver;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("sudoku-api/backtracking")
@@ -26,19 +29,15 @@ public class BacktrackingController {
         sf.setResolver(new BacktrackingResolver());
         sf.setNumberOfHiddenFields(numberOfFields);
         SudokuDAO sudoku = sf.create();
-        log.info(String.format("\n %s", sudoku));
-        ResponseEntity responseEntity = new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
-        log.info(String.format("response: %s", responseEntity));
-        return responseEntity;
+        return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
     }
 
-    @GetMapping("/getMoves")
-    public ResponseEntity<Object> getMovesFromResolver(@RequestParam("numberOfFields") Integer numberOfFields) {
-        SudokuResolverFactory sf = new SudokuResolverFactory();
-        sf.setResolver(new BacktrackingResolver());
-        sf.setNumberOfHiddenFields(numberOfFields);
-        SudokuDAO sudoku = sf.create();
-        log.info(String.format("\n %s", sudoku));
-        return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
+    @PostMapping("/getMoves")
+    public ResponseEntity<Object> getMovesFromResolver(@RequestBody SudokuDTO sudoku) {
+        log.info(sudoku);
+        BacktrackingResolver resolver = new BacktrackingResolver();
+        List<ResolverMoveDTO> moves = resolver.getMoves(SudokuDAO.fromDTO(sudoku));
+
+        return new ResponseEntity<>(moves, HttpStatus.OK);
     }
 }
