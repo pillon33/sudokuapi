@@ -2,10 +2,14 @@ package com.sudoku.api.Resolvers;
 
 import com.sudoku.api.Models.DAO.SudokuDAO;
 import com.sudoku.api.Models.DTO.ResolverMoveDTO;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface Resolver {
+
     /**
      * Finds one solution for given puzzle, returns null if solution couldn't be found.
      * @param sudoku puzzle to resolve

@@ -32,6 +32,11 @@ public class SudokuCellDAO {
     private List<Integer> candidates;
 
     /**
+     * Candidates for backtracking.
+     */
+    private List<Integer> checkedCandidates;
+
+    /**
      * Initializes SudokuCell with default candidates list (all digits).
      * @param value
      * @param solution
@@ -42,7 +47,9 @@ public class SudokuCellDAO {
         this.solution = solution;
         this.isClue = isClue;
         this.candidates = new ArrayList<>();
+        this.checkedCandidates = new ArrayList<>();
         this.setDefaultCandidates();
+        this.setDefaultUsedCandidates();
     }
 
     /**
@@ -55,6 +62,8 @@ public class SudokuCellDAO {
         this.isClue = true;
         this.candidates = new ArrayList<>();
         this.candidates.add(solution);
+        this.checkedCandidates = new ArrayList<>();
+        this.addUsedCandidate(solution);
     }
 
     public Boolean isCorrect() {
@@ -80,6 +89,28 @@ public class SudokuCellDAO {
 
         for (int i = 1; i <= 9; i++) {
             this.candidates.add(i);
+        }
+    }
+
+    public void addUsedCandidate(Integer candidate) {
+        if (!this.checkedCandidates.contains(candidate)) {
+            this.checkedCandidates.add(candidate);
+        }
+    }
+
+    public void removeUsedCandidate(Integer candidate) {
+        this.checkedCandidates.remove(candidate);
+    }
+
+    public int getNumberOfUsedCandidates() {
+        return this.checkedCandidates.size();
+    }
+
+    public void setDefaultUsedCandidates() {
+        this.checkedCandidates.clear();
+
+        for (int i = 1; i <= 9; i++) {
+            this.checkedCandidates.add(i);
         }
     }
 }

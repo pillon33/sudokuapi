@@ -27,17 +27,16 @@ public class SudokuResolverFactory implements SudokuFactory {
         bsf.setType(BaseSudokuType.RANDOM_DIAGONAL);
 
         SudokuDAO test = bsf.createBoard();
-        log.info(String.format("\n%s", test.isSolved()));
 
         SudokuDAO sudoku = resolver.resolve(test);
 
-        return sudoku.getResolvedBoard();
+        sudoku.resolveBoard();
+
+        return sudoku;
     }
 
     @Override
     public SudokuDAO createPuzzle(SudokuDAO sudoku) {
-        log.info("Starting with board:");
-        log.info(String.format("\n %s", sudoku));
         SudokuDAO inputBoard = new SudokuDAO(sudoku);
         int hiddenFields = 0;
         int iterations = 0;

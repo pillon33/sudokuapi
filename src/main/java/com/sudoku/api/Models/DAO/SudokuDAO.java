@@ -65,6 +65,7 @@ public class SudokuDAO {
             for (int col = 0; col < 9; col++) {
                 SudokuCellDAO otherCell = sudoku.getCellAtPosition(row, col);
                 SudokuCellDAO cell = new SudokuCellDAO(otherCell.getValue(), otherCell.getSolution(), otherCell.getIsClue());
+                cell.setCandidates(otherCell.getCandidates());
                 this.setCellAtPosition(row, col, cell);
             }
         }
@@ -95,15 +96,11 @@ public class SudokuDAO {
         return result;
     }
 
-    public SudokuDAO getResolvedBoard() {
-        for (SudokuBlockDAO block : this.blocks) {
-            for (SudokuCellDAO cell : block.cells) {
-                cell.setIsClue(true);
-                cell.setSolution(cell.getValue());
-            }
-        }
-
-        return this;
+    public void resolveBoard() {
+        this.getBlocks().forEach((block) -> block.getCells().forEach((cell) -> {
+            cell.setIsClue(true);
+            cell.setSolution(cell.getValue());
+        }));
     }
 
     public Boolean isCorrect() {
