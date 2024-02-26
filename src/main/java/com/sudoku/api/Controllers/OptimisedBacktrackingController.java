@@ -26,12 +26,10 @@ public class OptimisedBacktrackingController {
      */
     @GetMapping("/getPuzzle")
     public ResponseEntity<Object> getBoardFromResolverFactory(@RequestParam("numberOfFields") Integer numberOfFields) {
-        log.info("create puzzle " + numberOfFields);
         SudokuResolverFactory sf = new SudokuResolverFactory();
         sf.setResolver(new OptimisedBacktrackingResolver());
         sf.setNumberOfHiddenFields(numberOfFields);
         SudokuDAO sudoku = sf.create();
-        log.info(sudoku);
         return new ResponseEntity<>(SudokuDTO.fromSudokuDAO(sudoku), HttpStatus.OK);
     }
 
