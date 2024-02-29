@@ -18,5 +18,7 @@ H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\SudokuapiApplication.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\Enums\BaseSudokuType.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Resolvers\BacktrackingResolver.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Resolvers\RandomBacktrackingResolver.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Models\DTO\ResolverMoveDTO.java
+H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Controllers\RandomBacktrackingController.java
 H:\studia\projekty\java\sudokuapi\sudokuapi\src\main\java\com\sudoku\api\Controllers\SudokuController.java

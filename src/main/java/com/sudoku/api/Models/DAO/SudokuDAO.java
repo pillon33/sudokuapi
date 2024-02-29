@@ -103,6 +103,20 @@ public class SudokuDAO {
         }));
     }
 
+    public Boolean isFilled() {
+        Boolean result = true;
+
+        for (var block : this.blocks) {
+            for (var cell : block.cells) {
+                if (!cell.getIsClue() & cell.getValue() == 0) {
+                    result = false;
+                }
+            }
+        }
+
+        return result;
+    }
+
     public Boolean isCorrect() {
         for (int i=0; i < 9; i++) {
             List<SudokuCellDAO> row = this.getRow(i);

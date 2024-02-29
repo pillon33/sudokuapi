@@ -2,6 +2,7 @@ package com.sudoku.api.Services;
 
 import com.sudoku.api.Models.DAO.SudokuCellDAO;
 import com.sudoku.api.Models.DAO.SudokuDAO;
+import com.sudoku.api.Models.Other.BacktrackingData;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -113,6 +114,25 @@ public class SudokuService {
         cell.setValue(initialValue);
 
         return cell.getCandidates();
+    }
+
+    public static List<BacktrackingData> getEmptyCellCoordinates(SudokuDAO sudoku) {
+        var result = new ArrayList<BacktrackingData>();
+
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                SudokuCellDAO cell = sudoku.getCellAtPosition(row, col);
+
+                if (!cell.getIsClue() & cell.getValue() == 0) {
+                    var coordinates = new BacktrackingData();
+                    coordinates.setCol(col);
+                    coordinates.setRow(row);
+                    result.add(coordinates);
+                }
+            }
+        }
+
+        return result;
     }
 
     public static HashMap<String, Integer> getCellCoordinatesWithLeastCandidates(SudokuDAO sudoku) {

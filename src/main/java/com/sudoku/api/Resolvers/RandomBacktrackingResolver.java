@@ -1,41 +1,29 @@
 package com.sudoku.api.Resolvers;
 
-import com.sudoku.api.Models.DAO.SudokuBlockDAO;
 import com.sudoku.api.Models.DAO.SudokuCellDAO;
 import com.sudoku.api.Models.DAO.SudokuDAO;
 import com.sudoku.api.Models.DTO.ResolverMoveDTO;
-import com.sudoku.api.Models.DTO.SudokuDTO;
 import com.sudoku.api.Models.Other.BacktrackingData;
 import com.sudoku.api.Services.SudokuService;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
-@Getter
-@Setter
-@Log4j2
-public class OptimisedBacktrackingResolver implements Resolver {
-
+public class RandomBacktrackingResolver implements Resolver{
     @Override
     public SudokuDAO resolve(SudokuDAO sudoku) {
         int row = 0;
         int col = 0;
         List<ResolverMoveDTO> moveHistory = new ArrayList<>();
+        Random random = new Random();
+        int maxInsertedValues = 0;
 
         while (!sudoku.isSolved()) {
-            SudokuService.removeIllegalCandidatesForBoard(sudoku);
-
-            var coordinates = SudokuService.getCellCoordinatesWithLeastCandidates(sudoku);
-            row = coordinates.get("row");
-            col = coordinates.get("col");
-
             // all fields filled
-            if (row == -1) {
+            if (sudoku.isFilled()) {
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory);
 
@@ -49,22 +37,58 @@ public class OptimisedBacktrackingResolver implements Resolver {
 
             var cell = sudoku.getCellAtPosition(row, col);
 
+            if (cell.getIsClue() | cell.getValue() != 0) {
+                var emptyCells = SudokuService.getEmptyCellCoordinates(sudoku);
+                var element = emptyCells.get(random.nextInt(0, emptyCells.size()));
+
+                row = element.getRow();
+                col = element.getCol();
+                cell = sudoku.getCellAtPosition(row, col);
+            }
+
             if (cell.getCandidates().isEmpty()) {
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory);
+
+                if (moveHistory.size() > maxInsertedValues) {
+                    maxInsertedValues = moveHistory.size();
+                }
 
                 if (data.isErrorFlag()) {
                     throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
                 }
 
+                row = data.getRow();
+                col = data.getCol();
+
                 continue;
             }
 
-            var value = cell.getCandidates().get(0);
+            cell.setValue(cell.getCandidates().get(0));
+            cell.removeCandidate(cell.getValue());
 
-            cell.setValue(value);
-            cell.setCheckedCandidates(new ArrayList<>(cell.getCandidates()));
-            moveHistory.addFirst(new ResolverMoveDTO(row, col, value, cell.getCandidates()));
+            while (!sudoku.isCorrectOptimisedForLastMove(row, col) & !cell.getCandidates().isEmpty()) {
+                cell.setValue(cell.getCandidates().get(0));
+                cell.removeCandidate(cell.getValue());
+            }
+
+            moveHistory.addFirst(new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates()));
+
+            if (cell.getCandidates().isEmpty() & !sudoku.isCorrectOptimisedForLastMove(row, col)) {
+                // backtracking
+                BacktrackingData data = this.backtracking(sudoku, moveHistory);
+
+                if (moveHistory.size() > maxInsertedValues) {
+                    maxInsertedValues = moveHistory.size();
+                }
+
+                if (data.isErrorFlag()) {
+                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                }
+
+                row = data.getRow();
+                col = data.getCol();
+            }
         }
 
         return sudoku;
@@ -86,16 +110,12 @@ public class OptimisedBacktrackingResolver implements Resolver {
         int col = 0;
         List<ResolverMoveDTO> moveHistory = new ArrayList<>();
         List<ResolverMoveDTO> history = new ArrayList<>();
+        Random random = new Random();
+        int maxInsertedValues = 0;
 
         while (!sudoku.isSolved()) {
-            SudokuService.removeIllegalCandidatesForBoard(sudoku);
-
-            var coordinates = SudokuService.getCellCoordinatesWithLeastCandidates(sudoku);
-            row = coordinates.get("row");
-            col = coordinates.get("col");
-
             // all fields filled
-            if (row == -1) {
+            if (sudoku.isFilled()) {
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
 
@@ -109,24 +129,64 @@ public class OptimisedBacktrackingResolver implements Resolver {
 
             var cell = sudoku.getCellAtPosition(row, col);
 
+            if (cell.getIsClue() | cell.getValue() != 0) {
+                var emptyCells = SudokuService.getEmptyCellCoordinates(sudoku);
+                var element = emptyCells.get(random.nextInt(0, emptyCells.size()));
+
+                row = element.getRow();
+                col = element.getCol();
+                cell = sudoku.getCellAtPosition(row, col);
+            }
+
             if (cell.getCandidates().isEmpty()) {
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
+
+                if (moveHistory.size() > maxInsertedValues) {
+                    maxInsertedValues = moveHistory.size();
+                }
 
                 if (data.isErrorFlag()) {
                     throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
                 }
 
+                row = data.getRow();
+                col = data.getCol();
+
                 continue;
             }
 
-            var value = cell.getCandidates().get(0);
+            cell.setValue(cell.getCandidates().get(0));
+            cell.removeCandidate(cell.getValue());
 
-            cell.setValue(value);
-            cell.setCheckedCandidates(new ArrayList<>(cell.getCandidates()));
-            var move = new ResolverMoveDTO(row, col, value, cell.getCandidates());
-            moveHistory.addFirst(move);
-            history.add(move);
+            while (!sudoku.isCorrectOptimisedForLastMove(row, col) & !cell.getCandidates().isEmpty()) {
+                cell.setValue(cell.getCandidates().get(0));
+                cell.removeCandidate(cell.getValue());
+            }
+
+            var m = new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates());
+            moveHistory.addFirst(m);
+            history.add(m);
+
+            if (cell.getCandidates().isEmpty() & !sudoku.isCorrectOptimisedForLastMove(row, col)) {
+                // backtracking
+                BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
+
+                if (moveHistory.size() > maxInsertedValues) {
+                    maxInsertedValues = moveHistory.size();
+                }
+
+                if (data.isErrorFlag()) {
+                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                }
+
+                row = data.getRow();
+                col = data.getCol();
+            }
+
+            if (history.size() > 1000) {
+                return history;
+            }
         }
 
         return history;
@@ -136,34 +196,32 @@ public class OptimisedBacktrackingResolver implements Resolver {
         BacktrackingData result = new BacktrackingData();
         int row = 0;
         int col = 0;
-        SudokuCellDAO cell = new SudokuCellDAO(0, 0, false, new ArrayList<>(), new ArrayList<>());
+        SudokuCellDAO cell;
 
         if (moveHistory.isEmpty()) {
             result.setErrorFlag(true);
         }
+        
+        ResolverMoveDTO move;
 
         while (moveHistory.size() > 0) {
-            var move = moveHistory.getFirst();
+            move = moveHistory.getFirst();
             moveHistory.removeFirst();
 
             row = move.getRow();
             col = move.getColumn();
 
             cell = sudoku.getCellAtPosition(row, col);
-            cell.setCandidates(new ArrayList<>(cell.getCheckedCandidates()));
-
-            cell.removeCandidate(move.getInsertedValue());
             cell.setValue(0);
 
             if (cell.getCandidates().size() == 0) {
+                if (moveHistory.isEmpty()) {
+                    result.setErrorFlag(true);;
+                }
                 // keep backtracking
+                cell.setDefaultCandidates();
                 continue;
             }
-
-            cell.setValue(1);
-            this.resetCandidatesForEmptyCells(sudoku);
-            cell.setValue(0);
-
 
             // finished backtracking
             break;
@@ -173,11 +231,6 @@ public class OptimisedBacktrackingResolver implements Resolver {
         result.setRow(row);
         result.setSudoku(sudoku);
         result.setMoveHistory(moveHistory);
-
-        if (moveHistory.isEmpty() && cell.getCandidates().isEmpty()) {
-            // searched all possible values and couldn't find solution
-            result.setErrorFlag(true);
-        }
 
         return result;
     }
@@ -200,9 +253,6 @@ public class OptimisedBacktrackingResolver implements Resolver {
             col = move.getColumn();
 
             cell = sudoku.getCellAtPosition(row, col);
-            cell.setCandidates(new ArrayList<>(cell.getCheckedCandidates()));
-
-            cell.removeCandidate(move.getInsertedValue());
             cell.setValue(0);
 
             var moveToAdd = new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates());
@@ -210,14 +260,13 @@ public class OptimisedBacktrackingResolver implements Resolver {
 
             if (cell.getCandidates().size() == 0) {
                 // keep backtracking
+                if (moveHistory.isEmpty()) {
+                    result.setErrorFlag(true);;
+                }
                 history.add(moveToAdd);
+                cell.setDefaultCandidates();
                 continue;
             }
-
-            cell.setValue(1);
-            this.resetCandidatesForEmptyCells(sudoku);
-            cell.setValue(0);
-
 
             // finished backtracking
             break;
@@ -228,20 +277,6 @@ public class OptimisedBacktrackingResolver implements Resolver {
         result.setSudoku(sudoku);
         result.setMoveHistory(moveHistory);
 
-        if (moveHistory.isEmpty() && cell.getCandidates().isEmpty()) {
-            // searched all possible values and couldn't find solution
-            result.setErrorFlag(true);
-        }
-
         return result;
-    }
-
-    private void resetCandidatesForEmptyCells(SudokuDAO sudoku) {
-        sudoku.getBlocks().forEach((block) -> block.getCells().forEach((cell) -> {
-            if (cell.getValue() == 0) {
-                cell.setDefaultCandidates();
-            }
-//            cell.setDefaultCandidates();
-        }));
     }
 }
