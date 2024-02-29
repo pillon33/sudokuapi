@@ -12,6 +12,7 @@ com\sudoku\api\Controllers\OptimisedBacktrackingController.class
 com\sudoku\api\Models\DAO\SudokuCellDAO.class
 com\sudoku\api\Resolvers\RandomBacktrackingResolver.class
 com\sudoku\api\Repositories\ResolverRepository.class
+com\sudoku\api\Services\DifficultyLevelService.class
 com\sudoku\api\Controllers\BacktrackingController.class
 com\sudoku\api\Services\SudokuService.class
 com\sudoku\api\Models\DTO\ResolverMoveDTO.class
