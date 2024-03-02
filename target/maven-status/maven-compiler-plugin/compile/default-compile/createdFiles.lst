@@ -5,6 +5,7 @@ com\sudoku\api\Controllers\RandomBacktrackingController.class
 com\sudoku\api\Factories\Concrete\BaseSudokuFactory$1.class
 com\sudoku\api\SudokuapiApplication.class
 com\sudoku\api\Controllers\SudokuController.class
+com\sudoku\api\Controllers\DifficultyLevelController.class
 com\sudoku\api\Models\Enums\BaseSudokuType.class
 com\sudoku\api\Configuration\WebSecurityConfig.class
 com\sudoku\api\Models\DTO\ResolverDTO.class
@@ -24,3 +25,4 @@ com\sudoku\api\Factories\Abstract\SudokuFactory.class
 com\sudoku\api\Resolvers\OptimisedBacktrackingResolver.class
 com\sudoku\api\Factories\Concrete\SudokuResolverFactory.class
 com\sudoku\api\Resolvers\BacktrackingResolver.class
+com\sudoku\api\Models\DTO\DifficultyData.class
