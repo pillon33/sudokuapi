@@ -142,10 +142,6 @@ public class RandomBacktrackingResolver implements Resolver{
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
 
-                if (moveHistory.size() > maxInsertedValues) {
-                    maxInsertedValues = moveHistory.size();
-                }
-
                 if (data.isErrorFlag()) {
                     throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
                 }
@@ -171,10 +167,6 @@ public class RandomBacktrackingResolver implements Resolver{
             if (cell.getCandidates().isEmpty() & !sudoku.isCorrectOptimisedForLastMove(row, col)) {
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
-
-                if (moveHistory.size() > maxInsertedValues) {
-                    maxInsertedValues = moveHistory.size();
-                }
 
                 if (data.isErrorFlag()) {
                     throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
