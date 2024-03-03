@@ -28,7 +28,7 @@ public class RandomBacktrackingResolver implements Resolver{
                 BacktrackingData data = this.backtracking(sudoku, moveHistory);
 
                 if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
                 row = data.getRow();
@@ -55,7 +55,7 @@ public class RandomBacktrackingResolver implements Resolver{
                 }
 
                 if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
                 row = data.getRow();
@@ -83,7 +83,7 @@ public class RandomBacktrackingResolver implements Resolver{
                 }
 
                 if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
 
                 row = data.getRow();
