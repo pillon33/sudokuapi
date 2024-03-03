@@ -135,6 +135,22 @@ public class SudokuService {
         return result;
     }
 
+    public static Integer getNumberOfNonClues(SudokuDAO sudoku) {
+        int result = 0;
+
+        for (int row = 0; row < 9; row++) {
+            for (int col = 0; col < 9; col++) {
+                SudokuCellDAO cell = sudoku.getCellAtPosition(row, col);
+
+                if (!cell.getIsClue()) {
+                    result++;
+                }
+            }
+        }
+
+        return result;
+    }
+
     public static HashMap<String, Integer> getCellCoordinatesWithLeastCandidates(SudokuDAO sudoku) {
         int leastNumberOfCandidates = 10;
         int resultRow = -1;

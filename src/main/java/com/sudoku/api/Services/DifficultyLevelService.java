@@ -9,14 +9,27 @@ import com.sudoku.api.Resolvers.Resolver;
 
 public class DifficultyLevelService {
     public static Double getDifficultyLevelForBoard(SudokuDAO sudoku) {
-        var backtrackingResolver = new BacktrackingResolver();
         var optimisedResolver = new OptimisedBacktrackingResolver();
 
-        var backtrackingResult = backtrackingResolver.getMoves(sudoku).size();
         var optimisedResult = optimisedResolver.getMoves(sudoku).size();
 
-        double result = (backtrackingResult + optimisedResult);
-        result = result/2;
+        var numberOfHiddenFields = SudokuService.getNumberOfNonClues(sudoku);
+
+        double result = (optimisedResult - numberOfHiddenFields);
+        result /= 4;
+
+        double hiddenFieldsResult = numberOfHiddenFields - 25;
+        hiddenFieldsResult /= 64;
+        hiddenFieldsResult *= 100;
+
+        hiddenFieldsResult = DifficultyLevelService.capResult(hiddenFieldsResult);
+        result = DifficultyLevelService.capResult(result);
+
+        result = (result + hiddenFieldsResult)/2;
+
+        result *= 100;
+        result = (int) result;
+        result /= 100;
 
         return result;
     }
@@ -36,6 +49,13 @@ public class DifficultyLevelService {
                         )
                         .count()
         );
+
+        return result;
+    }
+
+    private static Double capResult(Double result) {
+        result = result < 0 ? 0 : result;
+        result = result > 100 ? 100 : result;
 
         return result;
     }
