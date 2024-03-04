@@ -19,7 +19,6 @@ public class RandomBacktrackingResolver implements Resolver{
         int col = 0;
         List<ResolverMoveDTO> moveHistory = new ArrayList<>();
         Random random = new Random();
-        int maxInsertedValues = 0;
 
         while (!sudoku.isSolved()) {
             // all fields filled
@@ -50,10 +49,6 @@ public class RandomBacktrackingResolver implements Resolver{
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory);
 
-                if (moveHistory.size() > maxInsertedValues) {
-                    maxInsertedValues = moveHistory.size();
-                }
-
                 if (data.isErrorFlag()) {
                     throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
                 }
@@ -77,10 +72,6 @@ public class RandomBacktrackingResolver implements Resolver{
             if (cell.getCandidates().isEmpty() & !sudoku.isCorrectOptimisedForLastMove(row, col)) {
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory);
-
-                if (moveHistory.size() > maxInsertedValues) {
-                    maxInsertedValues = moveHistory.size();
-                }
 
                 if (data.isErrorFlag()) {
                     throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -111,7 +102,6 @@ public class RandomBacktrackingResolver implements Resolver{
         List<ResolverMoveDTO> moveHistory = new ArrayList<>();
         List<ResolverMoveDTO> history = new ArrayList<>();
         Random random = new Random();
-        int maxInsertedValues = 0;
 
         while (!sudoku.isSolved()) {
             // all fields filled
