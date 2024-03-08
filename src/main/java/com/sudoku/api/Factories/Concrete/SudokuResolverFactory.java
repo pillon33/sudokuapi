@@ -17,7 +17,7 @@ import java.util.Random;
 public class SudokuResolverFactory implements SudokuFactory {
     private Resolver resolver;
     private int numberOfHiddenFields = 5;
-    private int loopIterationLimit = 100*40;
+    private int loopIterationLimit = 10000*40;
     private Random random = new Random();
 
     @Override
@@ -44,18 +44,16 @@ public class SudokuResolverFactory implements SudokuFactory {
         int row = 0;
 
         while (hiddenFields < numberOfHiddenFields) {
+            SudokuDAO tmp = new SudokuDAO(sudoku);
             col = random.nextInt(0, 9);
             row = random.nextInt(0, 9);
 
-            SudokuCellDAO cell = sudoku.getCellAtPosition(row, col);
+            SudokuCellDAO cell = tmp.getCellAtPosition(row, col);
 
-            cell.setIsClue(false);
-            cell.setValue(0);
-            cell.setDefaultCandidates();
+            cell.setNonClue();
 
-            sudoku.setCellAtPosition(row, col, cell);
-
-            if (resolver.isPuzzle(sudoku)) {
+            if (resolver.isPuzzle(tmp)) {
+                sudoku.getCellAtPosition(row, col).setNonClue();
                 hiddenFields++;
             } else {
                 cell.setIsClue(true);

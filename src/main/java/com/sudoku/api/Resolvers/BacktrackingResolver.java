@@ -24,7 +24,7 @@ public class BacktrackingResolver implements Resolver {
         int lastEditedCol = 0;
         List<ResolverMoveDTO> moveHistory = new ArrayList<>();
 
-        while (!sudoku.isSolved()) while (!sudoku.isSolved()) {
+        while (!sudoku.isSolved()) {
             // went through all fields and couldn't find any solution
             if (row >= 9) {
                 // backtracking

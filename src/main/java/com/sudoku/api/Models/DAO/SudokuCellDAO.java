@@ -113,4 +113,10 @@ public class SudokuCellDAO {
             this.checkedCandidates.add(i);
         }
     }
+
+    public void setNonClue() {
+        this.setValue(0);
+        this.setIsClue(false);
+        this.setDefaultCandidates();
+    }
 }

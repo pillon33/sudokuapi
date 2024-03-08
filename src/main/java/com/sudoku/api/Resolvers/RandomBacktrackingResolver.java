@@ -45,6 +45,8 @@ public class RandomBacktrackingResolver implements Resolver{
                 cell = sudoku.getCellAtPosition(row, col);
             }
 
+            SudokuService.removeIllegalCandidatesForCell(sudoku, row, col);
+
             if (cell.getCandidates().isEmpty()) {
                 // backtracking
                 BacktrackingData data = this.backtracking(sudoku, moveHistory);
@@ -60,26 +62,8 @@ public class RandomBacktrackingResolver implements Resolver{
             }
 
             cell.setValue(cell.getCandidates().get(0));
-            cell.removeCandidate(cell.getValue());
-
-            while (!sudoku.isCorrectOptimisedForLastMove(row, col) & !cell.getCandidates().isEmpty()) {
-                cell.setValue(cell.getCandidates().get(0));
-                cell.removeCandidate(cell.getValue());
-            }
 
             moveHistory.addFirst(new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates()));
-
-            if (cell.getCandidates().isEmpty() & !sudoku.isCorrectOptimisedForLastMove(row, col)) {
-                // backtracking
-                BacktrackingData data = this.backtracking(sudoku, moveHistory);
-
-                if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
-                }
-
-                row = data.getRow();
-                col = data.getCol();
-            }
         }
 
         return sudoku;
@@ -110,7 +94,7 @@ public class RandomBacktrackingResolver implements Resolver{
                 BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
 
                 if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                    return history;
                 }
 
                 row = data.getRow();
@@ -128,12 +112,15 @@ public class RandomBacktrackingResolver implements Resolver{
                 cell = sudoku.getCellAtPosition(row, col);
             }
 
+            SudokuService.removeIllegalCandidatesForCell(sudoku, row, col);
+
             if (cell.getCandidates().isEmpty()) {
                 // backtracking
+                cell.setDefaultCandidates();
                 BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
 
                 if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                    return history;
                 }
 
                 row = data.getRow();
@@ -143,28 +130,10 @@ public class RandomBacktrackingResolver implements Resolver{
             }
 
             cell.setValue(cell.getCandidates().get(0));
-            cell.removeCandidate(cell.getValue());
-
-            while (!sudoku.isCorrectOptimisedForLastMove(row, col) & !cell.getCandidates().isEmpty()) {
-                cell.setValue(cell.getCandidates().get(0));
-                cell.removeCandidate(cell.getValue());
-            }
 
             var m = new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates());
             moveHistory.addFirst(m);
             history.add(m);
-
-            if (cell.getCandidates().isEmpty() & !sudoku.isCorrectOptimisedForLastMove(row, col)) {
-                // backtracking
-                BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
-
-                if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
-                }
-
-                row = data.getRow();
-                col = data.getCol();
-            }
 
             if (history.size() > 1000) {
                 return history;
@@ -194,6 +163,7 @@ public class RandomBacktrackingResolver implements Resolver{
             col = move.getColumn();
 
             cell = sudoku.getCellAtPosition(row, col);
+            cell.removeCandidate(cell.getValue());
             cell.setValue(0);
 
             if (cell.getCandidates().size() == 0) {
@@ -235,6 +205,7 @@ public class RandomBacktrackingResolver implements Resolver{
             col = move.getColumn();
 
             cell = sudoku.getCellAtPosition(row, col);
+            cell.removeCandidate(cell.getValue());
             cell.setValue(0);
 
             var moveToAdd = new ResolverMoveDTO(row, col, cell.getValue(), cell.getCandidates());

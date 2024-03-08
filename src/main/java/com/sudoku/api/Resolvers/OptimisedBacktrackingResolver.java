@@ -72,7 +72,66 @@ public class OptimisedBacktrackingResolver implements Resolver {
 
     @Override
     public Boolean isPuzzle(SudokuDAO sudoku) {
-        return true;
+        int row = 0;
+        int col = 0;
+        List<ResolverMoveDTO> moveHistory = new ArrayList<>();
+        int numberOfSolutions = 0;
+
+        while (!sudoku.isSolved()) {
+            SudokuService.removeIllegalCandidatesForBoard(sudoku);
+
+            var coordinates = SudokuService.getCellCoordinatesWithLeastCandidates(sudoku);
+            row = coordinates.get("row");
+            col = coordinates.get("col");
+
+            // all fields filled
+            if (row == -1) {
+                // backtracking
+                BacktrackingData data = this.backtracking(sudoku, moveHistory);
+
+                if (data.isErrorFlag()) {
+                    return numberOfSolutions == 1;
+                }
+
+                row = data.getRow();
+                col = data.getCol();
+            }
+
+            var cell = sudoku.getCellAtPosition(row, col);
+
+            if (cell.getCandidates().isEmpty()) {
+                // backtracking
+                BacktrackingData data = this.backtracking(sudoku, moveHistory);
+
+                if (data.isErrorFlag()) {
+                    return numberOfSolutions == 1;
+                }
+
+                continue;
+            }
+
+            var value = cell.getCandidates().get(0);
+
+            cell.setValue(value);
+            cell.setCheckedCandidates(new ArrayList<>(cell.getCandidates()));
+            moveHistory.addFirst(new ResolverMoveDTO(row, col, value, cell.getCandidates()));
+
+            if (sudoku.isSolved()) {
+                numberOfSolutions++;
+
+                if (numberOfSolutions > 1) {
+                    return false;
+                }
+
+                BacktrackingData data = this.backtracking(sudoku, moveHistory);
+
+                if (data.isErrorFlag()) {
+                    return true;
+                }
+            }
+        }
+
+        return numberOfSolutions == 1;
     }
 
     @Override
@@ -100,7 +159,7 @@ public class OptimisedBacktrackingResolver implements Resolver {
                 BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
 
                 if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                    return history;
                 }
 
                 row = data.getRow();
@@ -114,7 +173,7 @@ public class OptimisedBacktrackingResolver implements Resolver {
                 BacktrackingData data = this.backtracking(sudoku, moveHistory, history);
 
                 if (data.isErrorFlag()) {
-                    throw new ResponseStatusException(HttpStatus.I_AM_A_TEAPOT);
+                    return history;
                 }
 
                 continue;
